@@ -1,0 +1,19 @@
+# Entorno virtual
+.venv/
+
+# Archivos generados por Python y pytest
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secretos y configuración local (¡nunca subirlos!)
+.env
+
+# Terraform (lo usaremos más adelante)
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Editor y sistema
+.vscode/
+Thumbs.db
