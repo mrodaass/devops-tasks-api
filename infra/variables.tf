@@ -9,3 +9,15 @@ variable "project_name" {
   type        = string
   default     = "devops-tasks-api"
 }
+
+variable "instance_type" {
+  description = "Tamaño del servidor EC2"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "image" {
+  description = "Imagen Docker que ejecutará el servidor"
+  type        = string
+  default     = "ghcr.io/mrodaass/devops-tasks-api:latest"
+}
