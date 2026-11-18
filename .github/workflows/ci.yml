@@ -10,7 +10,7 @@ on:
 jobs:
   # ---------- Job 1: pruebas ----------
   test:
-    runs-on: ubuntu-24.04    
+    runs-on: ubuntu-24.04 
     steps:
       - name: Descargar el código
         uses: actions/checkout@v5  
@@ -31,7 +31,10 @@ jobs:
   # ---------- Job 2: construir y probar la imagen ----------
   build:
     needs: test          # Solo corre si "test" pasó
-    runs-on: ubuntu-24.04    
+    runs-on: ubuntu-24.04  
+    permissions:
+      contents: read     # leer el código
+      packages: write    # publicar imágenes en GHCR
     steps:
       - name: Descargar el código
         uses: actions/checkout@v5   
@@ -52,3 +55,16 @@ jobs:
           echo "La API no respondió"
           docker logs api
           exit 1
+          
+      - name: Iniciar sesión en GHCR
+        if: github.event_name == 'push'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Publicar imagen
+        if: github.event_name == 'push'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository }}
+          docker tag devops-tasks-api:${{ github.sha }} $IMAGE:${{ github.sha }}
+          docker tag devops-tasks-api:${{ github.sha }} $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
