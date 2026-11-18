@@ -9,10 +9,12 @@ __pycache__/
 # Secretos y configuración local (¡nunca subirlos!)
 .env
 
-# Terraform (lo usaremos más adelante)
+# Terraform 
 .terraform/
 *.tfstate
 *.tfstate.*
+*.tfvars
+crash.log
 
 # Editor y sistema
 .vscode/
