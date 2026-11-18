@@ -10,13 +10,13 @@ on:
 jobs:
   # ---------- Job 1: pruebas ----------
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04    
     steps:
       - name: Descargar el código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5  
 
       - name: Instalar Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6 
         with:
           python-version: "3.11"
           cache: pip
@@ -31,10 +31,10 @@ jobs:
   # ---------- Job 2: construir y probar la imagen ----------
   build:
     needs: test          # Solo corre si "test" pasó
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04    
     steps:
       - name: Descargar el código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5   
 
       - name: Construir imagen Docker
         run: docker build -t devops-tasks-api:${{ github.sha }} .
